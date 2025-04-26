@@ -13,7 +13,7 @@ unsafe fn panic(_info:&PanicInfo) -> ! {
 
 #[repr(C)]
 #[derive(Clone, Copy)]
-pub struct List<T> {
+pub struct Array<T> {
     count: usize,
     capacity: usize,
     list: *mut T,
@@ -24,7 +24,7 @@ extern "C" {
     // fn exit(code:i32)-> !;
 }
 
-unsafe fn array_push<T>(l: *mut List<T>, item: T) {
+unsafe fn array_push<T>(l: *mut Array<T>, item: T) {
     if((*l).count>=(*l).capacity) {
         if((*l).capacity==0){
             (*l).capacity=5;
@@ -43,7 +43,7 @@ unsafe extern "C" fn main(argc:i32, argv:*mut *mut u8) -> i32 {
    for i in 0 .. argc {
        printf(b"%s\n".as_ptr(), *argv.add(i as usize));
    }
-   let mut l:List<i32>=zeroed();
+   let mut l:Array<i32>=zeroed();
    for i in 0 .. 100 {
        array_push(&mut l, i);
    }
