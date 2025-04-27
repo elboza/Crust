@@ -1,6 +1,2 @@
-main: main.o
-	gcc -o main main.o -lm
-
-main.o: main.rs
-	rustc --edition 2021 -g -C opt-level=z --emit=obj -C panic="abort" main.rs
-
+main: main.rs
+	rustc --edition 2021 -g -C link-args="-lc -lm" -C opt-level=z -C panic="abort" main.rs -o main
